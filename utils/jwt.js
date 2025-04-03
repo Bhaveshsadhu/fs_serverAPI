@@ -6,3 +6,11 @@ export const signJwt = (obj) => {
   });
   return token;
 };
+
+export const verifyJWTToken = (token) => {
+  try {
+    return jwt.verify(token, process.env.JWT_SECRET);
+  } catch (error) {
+    return error.message;
+  }
+};

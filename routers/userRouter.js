@@ -1,7 +1,8 @@
 import express from "express";
 import { GetUser, InsertUser } from "../models/users/UserModel.js";
 import { hashPassword, MatchPassword } from "../utils/bcryptpassword.js";
-import { signJwt } from "../utils/jwt.js";
+import { signJwt, verifyJWTToken } from "../utils/jwt.js";
+import { auth } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -43,16 +44,16 @@ router.post("/login", async (req, res, next) => {
     if (user?._id && MatchPassword(password, user.password)) {
       const token = signJwt({ email: email });
       user.password = undefined;
-      res.json({
+
+      return res.json({
         status: "success",
         message: "Login Success!!",
         user,
         token,
       });
-      return;
     }
     // if email and password dosent match or not found
-    res.json({
+    return res.json({
       status: "error",
       message: "Wrong Credentials",
     });
@@ -60,6 +61,22 @@ router.post("/login", async (req, res, next) => {
   } catch (error) {
     res.json({
       status: error,
+      message: error.message,
+    });
+  }
+});
+
+router.get("/", auth, (req, res, next) => {
+  try {
+    const user = req.userInfo;
+    console.log(user);
+    return res.json({
+      status: "success",
+      message: "Here is the user Profile",
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
       message: error.message,
     });
   }
