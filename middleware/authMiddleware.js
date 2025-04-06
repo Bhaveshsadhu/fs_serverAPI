@@ -6,6 +6,7 @@ export const auth = async (req, res, next) => {
     //1.get token
 
     const { authorization } = req.headers;
+    // console.log(req.headers);
     //2.validate if the token is valid
     const verifyToken = verifyJWTToken(authorization);
 

@@ -39,7 +39,9 @@ router.post("/login", async (req, res, next) => {
     // should get email and password
     const { email, password } = req.body;
     // email must be exists
+    console.log(req.body);
     const user = await GetUser(email);
+    // console.log(user);
     // if email found and password matched
     if (user?._id && MatchPassword(password, user.password)) {
       const token = signJwt({ email: email });
@@ -69,7 +71,7 @@ router.post("/login", async (req, res, next) => {
 router.get("/", auth, (req, res, next) => {
   try {
     const user = req.userInfo;
-    console.log(user);
+    // console.log(user);
     return res.json({
       status: "success",
       message: "Here is the user Profile",
