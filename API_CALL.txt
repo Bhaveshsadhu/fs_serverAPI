@@ -1,0 +1,30 @@
+1. USER LOGIN
+http://localhost:8000/api/v1/users/login
+{
+    "email":"br4sadhu@gmaiil.com",
+    "password":"123@"
+}
+
+2.USER SIGNUP
+http://localhost:8000/api/v1/users/signup
+{
+    "name":"Bhavesh",
+    "email":"br5sadhu@gmaiil.com",
+    "password":"123@"
+}
+
+3.GET USER
+http://localhost:8000/api/v1/users/signup
+header.authorization = "token from login response"
+
+4.Add Transcation
+http://localhost:8000/api/v1/users/transcations
+header.authorization = "token from login response"
+{
+    {
+  "type": "Income",
+  "title": "salary",
+  "amount": "1000",
+  "tdate": "2025-05-01"
+}
+}

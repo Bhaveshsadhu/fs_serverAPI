@@ -1,7 +1,9 @@
 import express from "express";
 import router from "./routers/userRouter.js";
+import transcationRouter from "./routers/transcationRouter.js";
 import { DbConnect } from "./dbconfig/MongoDBconfig.js";
 import cors from "cors";
+import { auth } from "./middleware/authMiddleware.js";
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -22,3 +24,4 @@ app.listen(PORT, (error) => {
 
 // API EndPoints for User Routers
 app.use("/api/v1/users", router);
+app.use("/api/v1/transcations", auth, transcationRouter);
