@@ -28,3 +28,8 @@ header.authorization = "token from login response"
   "tdate": "2025-05-01"
 }
 }
+
+5. Delete Transcation
+http://localhost:8000/api/v1/users/transcations
+header.authorization = "token from login response"
+["67f54bb4c1d4d8cb28a3ab74", "67f54bcdc1d4d8cb28a3ab7f"]

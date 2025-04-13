@@ -17,8 +17,9 @@ export const auth = async (req, res, next) => {
       //   verify email exists with _id
       if (user?._id) {
         // creating new property inside req like req.userInfo
-        req.userInfo = user;
+        // console.log(user);
         user.password = undefined;
+        req.userInfo = user;
         return next();
       }
     }

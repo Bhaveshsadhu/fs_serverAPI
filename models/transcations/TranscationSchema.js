@@ -14,7 +14,10 @@ const TranscationSchema = mongoose.Schema(
       type: Date,
       require: true,
     },
-
+    amount: {
+      type: Number,
+      require: true,
+    },
     UserId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
