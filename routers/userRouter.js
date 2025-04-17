@@ -9,6 +9,16 @@ const router = express.Router();
 // user signup
 router.post("/signup", async (req, res, next) => {
   try {
+    // Validate the Password
+    const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    if (!passwordRegex.test(req.body.password)) {
+       return res.json({
+        status: "error",
+        message: "Password must be at least 8 characters long and include at least one number and one special character.",
+      });
+    }
+    
+    
     // encrypt Password
     req.body.password = hashPassword(req.body.password);
     const user = await InsertUser(req.body);
@@ -22,14 +32,13 @@ router.post("/signup", async (req, res, next) => {
           message: "Error while creating User, Please try again Later",
         });
   } catch (error) {
-    let msg = error.message;
-    if (msg.includes("Error E11000 duplicate key error collection")) {
-      msg = "User Already Exists!!";
+    
+    if (error.message.includes("Error E11000 duplicate key error collection")) {
+      error.message = "User Already Exists!!";
     }
-    res.json({
-      status: "error",
-      message: msg,
-    });
+    error.statusCode = 200;
+    next(error);
+    
   }
 });
 
@@ -39,9 +48,9 @@ router.post("/login", async (req, res, next) => {
     // should get email and password
     const { email, password } = req.body;
     // email must be exists
-    console.log(req.body);
+   
     const user = await GetUser(email);
-    // console.log(user);
+    
     // if email found and password matched
     if (user?._id && MatchPassword(password, user.password)) {
       const token = signJwt({ email: email });
@@ -61,26 +70,22 @@ router.post("/login", async (req, res, next) => {
     });
     return;
   } catch (error) {
-    res.json({
-      status: error,
-      message: error.message,
-    });
+    next(error);
   }
 });
 
 router.get("/", auth, (req, res, next) => {
   try {
     const user = req.userInfo;
-    // console.log(user);
+    
     return res.json({
       status: "success",
       message: "Here is the user Profile",
       user,
     });
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    
+    next(error);
   }
 });
 

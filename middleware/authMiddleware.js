@@ -6,7 +6,7 @@ export const auth = async (req, res, next) => {
     //1.get token
 
     const { authorization } = req.headers;
-    // console.log(req.headers);
+    
     //2.validate if the token is valid
     const verifyToken = verifyJWTToken(authorization);
 
@@ -17,7 +17,7 @@ export const auth = async (req, res, next) => {
       //   verify email exists with _id
       if (user?._id) {
         // creating new property inside req like req.userInfo
-        // console.log(user);
+       
         user.password = undefined;
         req.userInfo = user;
         return next();
