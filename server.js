@@ -6,6 +6,7 @@ import cors from "cors";
 import { auth } from "./middleware/authMiddleware.js";
 import dotenv from 'dotenv';
 import { errorHandler } from "./middleware/errorHandlerMiddleware.js";
+// import mapRouter from "./routers/mapRouter.js";
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -30,6 +31,7 @@ app.listen(PORT, (error) => {
 // API EndPoints for User Routers
 app.use("/api/v1/users", router);
 app.use("/api/v1/transcations", auth, transcationRouter);
+// app.use("/api/v1/transcations", auth, mapRouter);
 
 
 // 404 Error Handle
