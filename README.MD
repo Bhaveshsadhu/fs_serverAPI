@@ -1,5 +1,5 @@
 
-```markdown
+
 # 🛠️ Finance Tracker API – Backend (Express & MongoDB)
 
 This is the backend REST API for the 💰 Finance Tracker application, built with **Express.js** and **MongoDB**. It provides secure user authentication, income/expense management, and data endpoints for chart visualization.
@@ -16,7 +16,7 @@ This is the backend REST API for the 💰 Finance Tracker application, built wit
 - **Postman for API testing**
 
 
-```
+
 
 ---
 
